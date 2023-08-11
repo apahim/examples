@@ -9,4 +9,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: reference-addon-operator
-  namespace: reference-addon-system
+  namespace: reference-addon

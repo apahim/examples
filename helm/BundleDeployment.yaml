@@ -1,0 +1,22 @@
+apiVersion: core.rukpak.io/v1alpha1
+kind: BundleDeployment
+metadata:
+  name: reference-addon
+spec:
+  provisionerClassName: core-rukpak-io-helm
+  config:
+    values: |
+      replicaCount: 1
+  template:
+    metadata:
+      labels:
+        app: reference-addon
+    spec:
+      source:
+        type: git
+        git:
+          ref:
+            branch: main
+          repository: https://github.com/apahim/examples
+          directory: ./helm
+      provisionerClassName: core-rukpak-io-helm

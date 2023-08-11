@@ -1,0 +1,110 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reference-addon-operator
+  namespace: reference-addon
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: reference-addon-operator
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: reference-addon-operator
+    spec:
+      containers:
+      - args:
+        - --secure-listen-address=0.0.0.0:8443
+        - --upstream=http://127.0.0.1:8080/
+        - --logtostderr=true
+        - --ignore-paths=/metrics,/healthz
+        - --tls-cert-file=/etc/tls/private/tls.crt
+        - --tls-private-key-file=/etc/tls/private/tls.key
+        - --proxy-endpoints-port=8643
+        image: registry.redhat.io/openshift4/ose-kube-rbac-proxy@sha256:128a542e1ce40ba0682716c642d2d6b6526d94d6a099c9b99cae33a31d806b21
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: healthz
+            port: 8643
+            scheme: HTTPS
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: metrics-proxy
+        ports:
+        - containerPort: 8443
+          name: metrics-proxy
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: healthz
+            port: 8643
+            scheme: HTTPS
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            cpu: 100m
+            memory: 64Mi
+          requests:
+            cpu: 25m
+            memory: 32Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - mountPath: /etc/tls/private
+          name: metrics-proxy-tls
+      - args:
+        - --enable-leader-election
+        image: quay.io/app-sre/reference-addon-manager@sha256:b829673045335c23c0dfd98289198ec0f06d2bdfc256e1e780392ac8c1e52b17
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz
+            port: 8081
+            scheme: HTTP
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: manager
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /readyz
+            port: 8081
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            cpu: 200m
+            memory: 64Mi
+          requests:
+            cpu: 50m
+            memory: 32Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+      serviceAccount: reference-addon-operator
+      serviceAccountName: reference-addon-operator
+      volumes:
+      - name: metrics-proxy-tls
+        secret:
+          defaultMode: 420
+          secretName: metrics-proxy-tls

@@ -1,0 +1,6 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: reference-addon
+  labels:
+    name: reference-addon

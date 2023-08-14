@@ -21,7 +21,7 @@ spec:
       containers:
         - command:
             - /webhooks
-          image: quay.io/operator-framework/"{{.config.rukpakImage}}"
+          image: quay.io/operator-framework/{{.config.rukpakImage}}
           imagePullPolicy: IfNotPresent
           name: webhooks
           ports:

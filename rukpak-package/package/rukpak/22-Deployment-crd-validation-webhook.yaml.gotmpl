@@ -18,7 +18,7 @@ spec:
       containers:
         - command:
             - /crdvalidator
-          image: quay.io/operator-framework/"{{.config.rukpakImage}}"
+          image: quay.io/operator-framework/{{.config.rukpakImage}}
           imagePullPolicy: IfNotPresent
           name: crd-validation-webhook
           resources:

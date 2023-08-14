@@ -48,7 +48,7 @@ spec:
             - mountPath: /etc/pki/tls
               name: certs
         - args:
-            - --unpack-image=quay.io/operator-framework/"{{.config.rukpakImage}}"
+            - --unpack-image=quay.io/operator-framework/{{.config.rukpakImage}}
             - --base-upload-manager-url=https://core.rukpak-system.svc
             - --storage-dir=/var/cache/bundles
             - --http-bind-address=127.0.0.1:8080
@@ -56,7 +56,7 @@ spec:
             - --bundle-ca-file=/etc/pki/tls/ca.crt
           command:
             - /helm
-          image: quay.io/operator-framework/"{{.config.rukpakImage}}"
+          image: quay.io/operator-framework/{{.config.rukpakImage}}
           imagePullPolicy: IfNotPresent
           name: manager
           ports:

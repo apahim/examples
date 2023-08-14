@@ -3,6 +3,16 @@ kind: PackageManifest
 metadata:
   name: rukpak
 spec:
+  config:
+    openAPIV3Schema:
+      properties:
+        rukpakImage:
+          description: rukpakImage is the reference to the image containing rukpak.
+          type: string
+          default: "rukpak:latest"
+      required:
+        - rukpakImage
+      type: object
   scopes:
     - Namespaced
     - Cluster

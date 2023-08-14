@@ -3,6 +3,6 @@ kind: ClusterPackage
 metadata:
   name: rukpak
 spec:
-  image: quay.io/apahim/rukpak-package:v6
+  image: quay.io/apahim/rukpak-package:v11
   config:
     rukpakImage: "rukpak:v0.13.0"

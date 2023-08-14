@@ -1,0 +1,20 @@
+apiVersion: manifests.package-operator.run/v1alpha1
+kind: PackageManifest
+metadata:
+  name: cert-manager-operator
+spec:
+  scopes:
+    - Namespaced
+    - Cluster
+  phases:
+    - name: ns
+    - name: deploy
+  availabilityProbes:
+    - probes:
+        - condition:
+            type: CatalogSourcesUnhealthy
+            status: "False"
+      selector:
+        kind:
+          group: operators.coreos.com
+          kind: Subscription

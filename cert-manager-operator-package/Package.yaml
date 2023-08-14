@@ -1,0 +1,6 @@
+apiVersion: package-operator.run/v1alpha1
+kind: ClusterPackage
+metadata:
+  name: cert-manager-operator
+spec:
+  image: quay.io/apahim/cert-manager-operator-package:v7

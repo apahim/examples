@@ -1,0 +1,16 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  annotations:
+    package-operator.run/phase: deploy
+  name: helm-provisioner
+  namespace: rukpak-system
+spec:
+  dnsNames:
+    - helm-provisioner.rukpak-system.svc
+    - helm-provisioner.rukpak-system.svc.cluster.local
+  issuerRef:
+    kind: Issuer
+    name: rukpak-ca-issuer
+  secretName: helm-provisioner-cert

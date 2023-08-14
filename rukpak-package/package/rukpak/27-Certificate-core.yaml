@@ -1,0 +1,17 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  annotations:
+    package-operator.run/phase: deploy
+  name: core
+  namespace: rukpak-system
+spec:
+  dnsNames:
+    - localhost
+    - core.rukpak-system.svc
+    - core.rukpak-system.svc.cluster.local
+  issuerRef:
+    kind: Issuer
+    name: rukpak-ca-issuer
+  secretName: core-cert

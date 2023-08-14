@@ -16,7 +16,7 @@ spec:
         type: git
         git:
           ref:
-            commit: 2d4ac01ed2b010a73c99e4fdcecd55108b746100
+            commit: 1c7fba81bcbbb00d4db79a7bd0be0a0d6f86f111
           repository: https://github.com/apahim/examples
           directory: ./helm
       provisionerClassName: core-rukpak-io-helm

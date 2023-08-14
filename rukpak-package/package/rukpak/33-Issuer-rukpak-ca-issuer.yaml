@@ -1,0 +1,11 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  annotations:
+    package-operator.run/phase: deploy
+  name: rukpak-ca-issuer
+  namespace: rukpak-system
+spec:
+  ca:
+    secretName: rukpak-ca

@@ -1,0 +1,16 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  annotations:
+    package-operator.run/phase: deploy
+  name: rukpak-webhook-certificate
+  namespace: rukpak-system
+spec:
+  dnsNames:
+    - rukpak-webhook-service.rukpak-system.svc
+    - rukpak-webhook-service.rukpak-system.svc.cluster.local
+  issuerRef:
+    kind: Issuer
+    name: rukpak-selfsigned
+  secretName: rukpak-webhook-certificate

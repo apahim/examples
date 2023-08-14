@@ -1,0 +1,8 @@
+apiVersion: package-operator.run/v1alpha1
+kind: ClusterPackage
+metadata:
+  name: rukpak
+spec:
+  image: quay.io/apahim/rukpak-package:v6
+  config:
+    rukpakImage: "rukpak:v0.13.0"

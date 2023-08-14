@@ -1,0 +1,10 @@
+apiVersion: operators.coreos.com/v1alpha2
+kind: OperatorGroup
+metadata:
+  name: cert-manager-operator
+  namespace: openshift-cert-manager-operator
+  annotations:
+    package-operator.run/phase: deploy
+spec:
+  targetNamespaces:
+    - openshift-cert-manager-operator

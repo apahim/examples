@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    package-operator.run/phase: deploy
+  name: rukpak-webhook-service
+  namespace: rukpak-system
+spec:
+  ports:
+    - port: 443
+      protocol: TCP
+      targetPort: 9443
+  selector:
+    app: webhooks
